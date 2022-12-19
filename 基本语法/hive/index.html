@@ -13,7 +13,7 @@
     
     
       
-        <title>pom文件 - maomao的笔记</title>
+        <title>Hive - maomao的笔记</title>
       
     
     
@@ -65,6 +65,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#hive" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -94,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              pom文件
+              Hive
             
           </span>
         </div>
@@ -202,14 +207,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
       
       
@@ -244,14 +247,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" >
       
       
       
@@ -286,19 +287,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../pom%E6%96%87%E4%BB%B6/" class="md-nav__link">
         pom文件
       </a>
-      
     </li>
   
 
@@ -396,6 +389,83 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hive" class="md-nav__link">
+    Hive权限语法
+  </a>
+  
+    <nav class="md-nav" aria-label="Hive权限语法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    1.角色
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2.用户
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.用户授权
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4.组授权
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5.角色授权
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6.用户移除权限
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    7.查看角色权限
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    8.权限说明
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -409,25 +479,75 @@
                   
 
 
-  <h1>pom文件</h1>
+  <h1>Hive</h1>
 
-<pre><code class="language-xml">&lt;!-- maven打包插件 --&gt;
-&lt;plugin&gt;
-    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-    &lt;version&gt;3.5.1&lt;/version&gt;
-    &lt;configuration&gt;
-        &lt;source&gt;8&lt;/source&gt;
-        &lt;target&gt;8&lt;/target&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
+<p><strong>HiveServer2启动</strong></p>
+<pre><code class="language-shell">nohup /app/hive/bin/hiveserver2 1&gt;/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
 </code></pre>
-<pre><code class="language-xml">&lt;!-- 轻量级DI容器Guice --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;com.google.inject&lt;/groupId&gt;
-    &lt;artifactId&gt;guice&lt;/artifactId&gt;
-    &lt;version&gt;5.1.0&lt;/version&gt;
-&lt;/dependency&gt;
+<p><strong>HiveServer2错误级别启动</strong></p>
+<pre><code class="language-shell">nohup /app/hive/bin/hiveserver2 -hiveconf hive.root.logger=DEBUG,console 1&gt;/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
+</code></pre>
+<p><strong>Hive metastore启动</strong></p>
+<pre><code class="language-shell">nohup /app/hive-metastore/bin/hive --service metastore 1&gt;/app/hive-metastore/logs/metastore.log 2&gt;&amp;1 &amp;
+</code></pre>
+<h2 id="hive">Hive权限语法</h2>
+<h3 id="1">1.角色</h3>
+<pre><code class="language-shell">## 创建角色
+create role role_name;
+## 显示角色
+show roles;
+## 删除角色
+drop role role_name;
+</code></pre>
+<h3 id="2">2.用户</h3>
+<pre><code class="language-shell">## 用户进入admin角色权限
+set hive.users.in.admin.role;
+set role admin;
+## 查看某用户的所有角色
+show role grant user user_name
+## 给角色添加用户
+grant role role_name to user user_name;
+</code></pre>
+<h3 id="3">3.用户授权</h3>
+<pre><code class="language-shell">## 基于数据库
+grant select on database default to useradmin;
+## 基于某张表
+grant select on table ppdata to user admin;
+</code></pre>
+<h3 id="4">4.组授权</h3>
+<pre><code class="language-shell">## 基于数据库
+grant select on database default to group admin;
+## 基于某张表
+grant select on table ppdata to group admin;
+</code></pre>
+<h3 id="5">5.角色授权</h3>
+<pre><code class="language-shell">## 基于数据库
+grant select on database default to role admin;
+## 基于某张表
+grant select on table ppdata to role admin;
+</code></pre>
+<h3 id="6">6.用户移除权限</h3>
+<pre><code class="language-shell">## 基于数据库
+revoke select on database default from useruserB;
+## 基于某张表
+revoke select on table ppdata from useruserB;
+</code></pre>
+<h3 id="7">7.查看角色权限</h3>
+<pre><code class="language-shell">## 在某个数据库的权限
+show grant role role_name on database database_name;
+## 在某表的权限
+show grant role role_name on [table] table_name;
+</code></pre>
+<h3 id="8">8.权限说明</h3>
+<pre><code class="language-tex">名称                    描述
+ALL                 赋予所有的权限
+ALTER               有修改表结构的权限
+CREATE              有创建表的权限
+DROP                有删除表或表中的分区的权限
+LOCK                开启并发后，锁定和解锁定表的权限
+SELECT              查询表或者分区中数据的权限
+SHOW_DATABASE       查看所有数据库的权限
+UPDATE              向表或者分区中插入或加载数据的权限
 </code></pre>
 
 
@@ -444,42 +564,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../Superset/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Superset" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Superset
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../hadoop/" class="md-footer__link md-footer__link--next" aria-label="Next: Hadoop" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Hadoop
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
