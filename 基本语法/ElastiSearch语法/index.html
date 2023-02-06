@@ -1,0 +1,1321 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>ElasticSearch语法 - maomao的笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.472b142f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.08040f6c.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#elasticsearch" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="maomao的笔记" class="md-header__button md-logo" aria-label="maomao的笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            maomao的笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ElasticSearch语法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent=""  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="maomao的笔记" class="md-nav__button md-logo" aria-label="maomao的笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    maomao的笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          目录
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="目录" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          目录
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Welcome to Maomao's Website
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_2" type="checkbox" id="__nav_1_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_2">
+          基本语法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="基本语法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          基本语法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Superset/" class="md-nav__link">
+        Superset
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pom%E6%96%87%E4%BB%B6/" class="md-nav__link">
+        pom文件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hadoop/" class="md-nav__link">
+        Hadoop
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hive/" class="md-nav__link">
+        Hive
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Rabbitmq/" class="md-nav__link">
+        Rabbitmq
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%8A%B6%E6%80%81%E7%A0%81/" class="md-nav__link">
+        状态码
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ElasticSearch语法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ElasticSearch语法
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#elasticsearchindextypefield" class="md-nav__link">
+    一、ElasticSearch创建index、type、field
+  </a>
+  
+    <nav class="md-nav" aria-label="一、ElasticSearch创建index、type、field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1elasticsearch" class="md-nav__link">
+    1、ElasticSearch 和 关系型数据库数据模型对应关系表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2、创建索引并查看
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3、删除索引并查看
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4、文档操作
+  </a>
+  
+    <nav class="md-nav" aria-label="4、文档操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1、查看文档类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2、在索引中添加文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3、在索引中查看文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    4.4、在索引中修改文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    4.5、在索引中删除文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    4.6、在索引中批量操作文档
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5indextypefield" class="md-nav__link">
+    5、创建一个数据模型样例（包含index、type、field）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6elaticsearchtypefield" class="md-nav__link">
+    6、ElaticSearch给type增加一项field
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elasticsearch_1" class="md-nav__link">
+    二、ElasticSearch搜索语句
+  </a>
+  
+    <nav class="md-nav" aria-label="二、ElasticSearch搜索语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1match_all" class="md-nav__link">
+    1、最简单的搜索，使用match_all来表示，表示搜索全部
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2from0size" class="md-nav__link">
+    2、分页搜索，from表示偏移量，从0来时，size表示每页显示的数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3sortcdate" class="md-nav__link">
+    3、搜索排序，使用sort表示，例如cdate字段降序排列
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_sourcesourcetitle" class="md-nav__link">
+    4、搜索并返回指定字段内容，使用_source表示，例如只返回source和title两个字段内容
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5matchid20" class="md-nav__link">
+    5、条件搜索，使用match表示匹配条件，例如搜索出id为20的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6addressmillmatch" class="md-nav__link">
+    6、文本类型字段的条件搜索，例如搜索address字段中包含"mill"的文档，对比上一条搜索可以发现，对于数值类型match操作使用的是精确匹配，对于文本类型使用的是模糊匹配
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7match_phraseaddressmilllane" class="md-nav__link">
+    7、短语匹配搜索，使用match_phrase表示，例如搜索address字段中同时包含mill和lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8boolmustaddressmilllane" class="md-nav__link">
+    8、组合搜索，使用bool来进行组合，must表示同时满足，例如搜索address字段中同时包含mill和lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9shouldaddressmilllane" class="md-nav__link">
+    9、组合搜索，should表示满足其中任意一个，搜索address字段中包含mill或者lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10must_notaddressmilllane" class="md-nav__link">
+    10、组合搜索，must_not表示同时不满足，例如搜索address字段中不包含mill且不包含lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11mustmust_notage40stateid" class="md-nav__link">
+    11、组合搜索，组合must和must_not，例如搜索age字段等于40且state字段不包含ID的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12filterbalance2000030000" class="md-nav__link">
+    12、搜索过滤，使用filter来表示，例如过滤出balance字段在20000~30000的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13aggsmysqlgroup-byvinstate" class="md-nav__link">
+    13、对搜索结果进行聚合，使用aggs来表示，类似于MySQL中group by,例如对vin字段进行聚合，统计出相同state的文档数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14statevinbalance" class="md-nav__link">
+    14、嵌套聚合，例如对state字段进行聚合，统计出相同vin的文档数量，再统计出balance的平均值
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_3">
+          项目中遇到的问题
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="项目中遇到的问题" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          项目中遇到的问题
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/%E9%A1%B9%E7%9B%AEbug/" class="md-nav__link">
+        项目bug
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/hive%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        项目bug
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#elasticsearchindextypefield" class="md-nav__link">
+    一、ElasticSearch创建index、type、field
+  </a>
+  
+    <nav class="md-nav" aria-label="一、ElasticSearch创建index、type、field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1elasticsearch" class="md-nav__link">
+    1、ElasticSearch 和 关系型数据库数据模型对应关系表
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    2、创建索引并查看
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3、删除索引并查看
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    4、文档操作
+  </a>
+  
+    <nav class="md-nav" aria-label="4、文档操作">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    4.1、查看文档类型
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    4.2、在索引中添加文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    4.3、在索引中查看文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    4.4、在索引中修改文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    4.5、在索引中删除文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46" class="md-nav__link">
+    4.6、在索引中批量操作文档
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5indextypefield" class="md-nav__link">
+    5、创建一个数据模型样例（包含index、type、field）
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6elaticsearchtypefield" class="md-nav__link">
+    6、ElaticSearch给type增加一项field
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elasticsearch_1" class="md-nav__link">
+    二、ElasticSearch搜索语句
+  </a>
+  
+    <nav class="md-nav" aria-label="二、ElasticSearch搜索语句">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1match_all" class="md-nav__link">
+    1、最简单的搜索，使用match_all来表示，表示搜索全部
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2from0size" class="md-nav__link">
+    2、分页搜索，from表示偏移量，从0来时，size表示每页显示的数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3sortcdate" class="md-nav__link">
+    3、搜索排序，使用sort表示，例如cdate字段降序排列
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_sourcesourcetitle" class="md-nav__link">
+    4、搜索并返回指定字段内容，使用_source表示，例如只返回source和title两个字段内容
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5matchid20" class="md-nav__link">
+    5、条件搜索，使用match表示匹配条件，例如搜索出id为20的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6addressmillmatch" class="md-nav__link">
+    6、文本类型字段的条件搜索，例如搜索address字段中包含"mill"的文档，对比上一条搜索可以发现，对于数值类型match操作使用的是精确匹配，对于文本类型使用的是模糊匹配
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7match_phraseaddressmilllane" class="md-nav__link">
+    7、短语匹配搜索，使用match_phrase表示，例如搜索address字段中同时包含mill和lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8boolmustaddressmilllane" class="md-nav__link">
+    8、组合搜索，使用bool来进行组合，must表示同时满足，例如搜索address字段中同时包含mill和lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9shouldaddressmilllane" class="md-nav__link">
+    9、组合搜索，should表示满足其中任意一个，搜索address字段中包含mill或者lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10must_notaddressmilllane" class="md-nav__link">
+    10、组合搜索，must_not表示同时不满足，例如搜索address字段中不包含mill且不包含lane的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11mustmust_notage40stateid" class="md-nav__link">
+    11、组合搜索，组合must和must_not，例如搜索age字段等于40且state字段不包含ID的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12filterbalance2000030000" class="md-nav__link">
+    12、搜索过滤，使用filter来表示，例如过滤出balance字段在20000~30000的文档
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13aggsmysqlgroup-byvinstate" class="md-nav__link">
+    13、对搜索结果进行聚合，使用aggs来表示，类似于MySQL中group by,例如对vin字段进行聚合，统计出相同state的文档数量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14statevinbalance" class="md-nav__link">
+    14、嵌套聚合，例如对state字段进行聚合，统计出相同vin的文档数量，再统计出balance的平均值
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="elasticsearch">Elasticsearch语法大全</h1>
+<p>基于kibana操作Elasticsearch</p>
+<h2 id="elasticsearchindextypefield">一、ElasticSearch创建index、type、field</h2>
+<h3 id="1elasticsearch">1、ElasticSearch 和 关系型数据库数据模型对应关系表</h3>
+<p>Relational  DB =&gt; Database =&gt; Tables =&gt; Rows        =&gt; Columns</p>
+<p>Elasitcsearch   =&gt;  Indices     =&gt; Types  =&gt; Documents =&gt; Fields</p>
+<h3 id="2">2、创建索引并查看</h3>
+<pre><code>PUT /decode
+GET /_cat/indices?v
+</code></pre>
+<h3 id="3">3、删除索引并查看</h3>
+<pre><code>DELETE /decode
+GET /_cat/indices?v
+</code></pre>
+<h3 id="4">4、文档操作</h3>
+<h4 id="41">4.1、查看文档类型</h4>
+<pre><code>GET /decode/resolve/_mapping
+</code></pre>
+<h4 id="42">4.2、在索引中添加文档</h4>
+<pre><code>PUT /decode/resolve/1
+{
+    &quot;vin&quot;:&quot;B123456789&quot;
+}
+</code></pre>
+<h4 id="43">4.3、在索引中查看文档</h4>
+<pre><code>POST /decode/resolve/1/
+</code></pre>
+<h4 id="44">4.4、在索引中修改文档</h4>
+<pre><code>POST /decode/resolve/1/_update
+{
+    &quot;doc&quot;:{&quot;vin&quot;:&quot;A12345555678&quot;}
+}
+</code></pre>
+<h4 id="45">4.5、在索引中删除文档</h4>
+<pre><code>DELETE /decode/resolve/1
+</code></pre>
+<h4 id="46">4.6、在索引中批量操作文档</h4>
+<pre><code>POST /decode/resolve/_bulk
+{&quot;index&quot;:{&quot;_id&quot;:&quot;1&quot;}}
+{&quot;vin&quot;: &quot;D1445266366&quot; }
+{&quot;index&quot;:{&quot;_id&quot;:&quot;2&quot;}}
+{&quot;vin&quot;: &quot;C4526365588&quot; }
+</code></pre>
+<h3 id="5indextypefield">5、创建一个数据模型样例（包含index、type、field）</h3>
+<pre><code>PUT /decode
+{
+    &quot;settings&quot;:{
+        &quot;index&quot;:{
+            &quot;number_of_shards&quot;:3,
+            &quot;number_of_replicas&quot;:0
+        }
+    },
+    &quot;mappings&quot;:{
+        &quot;resolve&quot;:{
+            &quot;properties&quot;:{
+                &quot;id&quot;:{
+                    &quot;type&quot;:&quot;keyword&quot;
+                },
+                &quot;vin&quot;:{
+                    &quot;type&quot;:&quot;keyword&quot;
+                },
+                &quot;gender&quot;:{
+                    &quot;type&quot;:&quot;keyword&quot;
+                },
+                &quot;carBrandId&quot;:{
+                    &quot;type&quot;:&quot;text&quot;
+                },
+                &quot;balance&quot;:{
+                    &quot;type&quot;:&quot;int&quot;
+                },
+                &quot;age&quot;:{
+                    &quot;type&quot;:&quot;int&quot;
+                },
+                &quot;address&quot;:{
+                    &quot;type&quot;:&quot;keyword&quot;
+                },
+                &quot;craeteTime&quot;:{
+                    &quot;type&quot;:&quot;date&quot;
+                },
+                &quot;statusId&quot;:{
+                    &quot;type&quot;:&quot;keyword&quot;
+                },
+                &quot;enable&quot;:{
+                    &quot;type&quot;:&quot;boolean&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="6elaticsearchtypefield">6、ElaticSearch给type增加一项field</h3>
+<pre><code>PUT decode/_mapping/resolve
+{
+ &quot;properties&quot;: {
+   &quot;fieldName&quot;:{
+     &quot;type&quot;:&quot;boolean&quot;
+   }
+ }
+}
+</code></pre>
+<h2 id="elasticsearch_1">二、ElasticSearch搜索语句</h2>
+<h3 id="1match_all">1、最简单的搜索，使用match_all来表示，表示搜索全部</h3>
+<pre><code>GET /decode/resolve/_serach
+{
+    &quot;query&quot;:&quot;{&quot;match_all&quot;:{}}
+}
+</code></pre>
+<h3 id="2from0size">2、分页搜索，from表示偏移量，从0来时，size表示每页显示的数量</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{&quot;match_all&quot;:{}},
+    &quot;from&quot;:0,
+    &quot;size&quot;:10
+}
+</code></pre>
+<h3 id="3sortcdate">3、搜索排序，使用sort表示，例如cdate字段降序排列</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{&quot;match_all&quot;:{}},
+    &quot;sort&quot;:{&quot;cdate&quot;:{&quot;order&quot;:&quot;desc&quot;}}
+}
+</code></pre>
+<h3 id="4_sourcesourcetitle">4、搜索并返回指定字段内容，使用_source表示，例如只返回source和title两个字段内容</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{&quot;match_all&quot;:{}},
+    &quot;_source&quot;:[&quot;source&quot;,&quot;title&quot;]
+}
+</code></pre>
+<h3 id="5matchid20">5、条件搜索，使用match表示匹配条件，例如搜索出id为20的文档</h3>
+<pre><code>GET /decode/resolve/_seatch
+{
+    &quot;query&quot;:{
+        &quot;match&quot;:{
+            &quot;id&quot;:20
+        }
+    }
+}
+</code></pre>
+<h3 id="6addressmillmatch">6、文本类型字段的条件搜索，例如搜索address字段中包含"mill"的文档，对比上一条搜索可以发现，对于数值类型match操作使用的是精确匹配，对于文本类型使用的是模糊匹配</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;match&quot;:{
+            &quot;adress&quot;:&quot;mill&quot;
+        }
+    },
+    &quot;_source&quot;:[&quot;id&quot;,&quot;address&quot;]
+}
+</code></pre>
+<h3 id="7match_phraseaddressmilllane">7、短语匹配搜索，使用match_phrase表示，例如搜索address字段中同时包含mill和lane的文档</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;match_phrase&quot;:{
+            &quot;address&quot;:&quot;mill lane&quot;
+        }
+    }
+}
+</code></pre>
+<h3 id="8boolmustaddressmilllane">8、组合搜索，使用bool来进行组合，must表示同时满足，例如搜索address字段中同时包含mill和lane的文档</h3>
+<pre><code>GET /dedoce/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+            &quot;must&quot;:[
+                {&quot;match&quot;:{&quot;address&quot;:&quot;mill&quot;}},
+                {&quot;match&quot;:{&quot;address&quot;:&quot;lane}}
+            ]
+        }
+    }
+}
+</code></pre>
+<h3 id="9shouldaddressmilllane">9、组合搜索，should表示满足其中任意一个，搜索address字段中包含mill或者lane的文档</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+            &quot;should&quot;:[
+                {&quot;match&quot;:{&quot;address&quot;:&quot;mill}},
+                {&quot;match&quot;:{&quot;address&quot;:&quot;lane}}
+            ]
+        }
+    }
+}
+</code></pre>
+<h3 id="10must_notaddressmilllane">10、组合搜索，must_not表示同时不满足，例如搜索address字段中不包含mill且不包含lane的文档</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+            &quot;must_not&quot;:[
+                {&quot;match&quot;:{&quot;address&quot;:&quot;mill}},
+                {&quot;match&quot;:{&quot;address&quot;:&quot;lane}}
+            ]
+        }
+    }
+}
+</code></pre>
+<h3 id="11mustmust_notage40stateid">11、组合搜索，组合must和must_not，例如搜索age字段等于40且state字段不包含ID的文档</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+            &quot;must&quot;:[
+                {&quot;match&quot;:{&quot;age&quot;:&quot;40}}
+            ],
+             &quot;must_not&quot;:[
+                 {&quot;match&quot;:{&quot;state&quot;:&quot;ID&quot;}}
+             ]
+        }
+    }
+}
+</code></pre>
+<h3 id="12filterbalance2000030000">12、搜索过滤，使用filter来表示，例如过滤出balance字段在20000~30000的文档</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;query&quot;:{
+        &quot;bool&quot;:{
+            &quot;must&quot;:{
+                &quot;match_all&quot;:{}
+            },
+            &quot;filter&quot;:{
+                &quot;ranger&quot;:{
+                    &quot;balance&quot;:{
+                        &quot;gte&quot;:20000,
+                        &quot;lte&quot;:30000
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="13aggsmysqlgroup-byvinstate">13、对搜索结果进行聚合，使用aggs来表示，类似于MySQL中group by,例如对vin字段进行聚合，统计出相同state的文档数量</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;size&quot;:0,
+    &quot;aggs&quot;:{
+        &quot;group_by_vin&quot;:{
+            &quot;terms&quot;:{
+                &quot;field&quot;:&quot;vin&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="14statevinbalance">14、嵌套聚合，例如对state字段进行聚合，统计出相同vin的文档数量，再统计出balance的平均值</h3>
+<pre><code>GET /decode/resolve/_search
+{
+    &quot;size&quot;:0,
+    &quot;aggs&quot;{
+        &quot;group_by_vin&quot;:{
+            &quot;terms&quot;:{
+                &quot;field&quot;:&quot;vin&quot;
+            },
+            &quot;aggs&quot;:{
+                &quot;average_balance&quot;:{
+                    &quot;avg&quot;:{
+                        &quot;field&quot;:&quot;balance&quot;
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../%E7%8A%B6%E6%80%81%E7%A0%81/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 状态码" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              状态码
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/%E9%A1%B9%E7%9B%AEbug/" class="md-footer__link md-footer__link--next" aria-label="Next: 项目bug" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              项目bug
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2020 - 2022 Martin Donath
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/squidfunk" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d6c3db9e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
