@@ -610,6 +610,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#elasticsearch_2" class="md-nav__link">
+    三、ElasticSearch更新语句
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -763,6 +770,53 @@
     <li class="md-nav__item">
       <a href="../../%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/" class="md-nav__link">
         项目记录
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_5" type="checkbox" id="__nav_1_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1_5">
+          代码工具
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="代码工具" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          代码工具
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BB%A3%E7%A0%81%E5%B7%A5%E5%85%B7/Java%E5%B7%A5%E5%85%B7/" class="md-nav__link">
+        Java工具
       </a>
     </li>
   
@@ -1019,6 +1073,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elasticsearch_2" class="md-nav__link">
+    三、ElasticSearch更新语句
+  </a>
   
 </li>
       
@@ -1302,6 +1363,26 @@ GET /_cat/indices?v
             }
         }
     }
+}
+</code></pre>
+<h2 id="elasticsearch_2">三、ElasticSearch更新语句</h2>
+<pre><code>#更新语句
+POST policies_pre_2023/_update_by_query
+{
+  &quot;query&quot;: {
+    &quot;bool&quot;: {
+      &quot;must&quot;: [
+        {
+          &quot;term&quot;: {
+            &quot;uuid&quot;: &quot;83e1e128c0e183d2e6caf125b72604b9&quot;
+          }
+        }
+      ]
+    }
+  },
+  &quot;script&quot;: {
+    &quot;source&quot;: &quot;ctx._source['issue_organization'] = '省司法厅'&quot;
+  }
 }
 </code></pre>
 
