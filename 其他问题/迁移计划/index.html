@@ -13,7 +13,7 @@
     
     
       
-        <title>Java问题 - maomao的笔记</title>
+        <title>迁移计划 - maomao的笔记</title>
       
     
     
@@ -65,6 +65,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -94,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Java问题
+              迁移计划
             
           </span>
         </div>
@@ -202,14 +207,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
       
       
       
@@ -403,14 +406,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_3" type="checkbox" id="__nav_1_3" >
       
       
       
@@ -431,19 +432,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Java%E9%97%AE%E9%A2%98/" class="md-nav__link">
         Java问题
       </a>
-      
     </li>
   
 
@@ -616,6 +609,83 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    关停软件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    迁移大体步骤
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    具体迁移
+  </a>
+  
+    <nav class="md-nav" aria-label="具体迁移">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namenode" class="md-nav__link">
+    迁移namenode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secondarynamenode" class="md-nav__link">
+    迁移SecondaryNameNode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resourcemanager" class="md-nav__link">
+    迁移resourceManager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    增加节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    剔除节点
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    再次加节点
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -629,12 +699,313 @@
                   
 
 
-  <h1>Java问题</h1>
+  <h1>迁移计划</h1>
 
-<p>Java16级以上版本无jre</p>
-<p>可以由以下命令从bin中提取出来</p>
-<pre><code class="language-javascript">bin\jlink.exe --module-path jmods --add-modules java.desktop --output jre
+<h2 id="_1">关停软件</h2>
+<table>
+<thead>
+<tr>
+<th>机器</th>
+<th>软件名字</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hadoop1</td>
+<td>matestore</td>
+<td></td>
+</tr>
+<tr>
+<td>hadoop2</td>
+<td>flume（普通）</td>
+<td></td>
+</tr>
+<tr>
+<td>hadoop3</td>
+<td>sparkMaster/History Server</td>
+<td></td>
+</tr>
+<tr>
+<td>hadoop4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>hadoop5</td>
+<td>flume（通爬虫）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>flume</p>
+<pre><code class="language-shell">nohup /app/flume/bin/flume-ng agent -c /app/flume/conf -f /app/flume/conf/flume.conf --name a1 -Dflume.root.logger=INFO,console 1&gt;/app/flume/logs/special-database.log 2&gt;&amp;1 &amp;
 </code></pre>
+<p>hive</p>
+<pre><code class="language-shell">nohup /app/hive-metastore/bin/hive --service metastore -hiveconf hive.root.logger=INFO,console 1&gt;/app/hive-metastore/logs/metastore.log 2&gt;&amp;1 &amp;
+
+
+
+nohup /app/hive/bin/hiveserver2 -hiveconf hive.root.logger=INFO,console 1&gt;/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
+</code></pre>
+<pre><code class="language-shell">cat &gt;&gt;/etc/hosts&lt;&lt; EOF
+172.16.8.67  hadoop7
+172.16.8.68  hadoop8
+172.16.8.69  hadoop9
+172.16.8.70  hadoop10
+EOF
+</code></pre>
+<p>迁移参考：</p>
+<p>https://www.cnblogs.com/sw-code/p/16388176.html</p>
+<h2 id="_2">迁移大体步骤</h2>
+<p>节点：nn在hadoop1,rn在hadoop3。</p>
+<p>先迁移hdfs，最后迁移nn。待hdfs迁移完成后再迁移yarn</p>
+<h2 id="_3">具体迁移</h2>
+<h3 id="namenode">迁移namenode</h3>
+<ol>
+<li>
+<p>先关闭依赖hdfs的组件，hive,flume</p>
+</li>
+<li>
+<p>关闭hdfs</p>
+</li>
+<li>
+<p>修改配置。修改hdfs-site.xml的dfs.namenode.http-address，dfs.namenode.servicerpc-address，core-site.xml的fs.defaultFS到新的节点。</p>
+</li>
+</ol>
+<p>```xml
+   <property>
+            <name>dfs.namenode.http-address</name>
+            <value>hadoop10:50070</value>
+           </property>
+    <property>
+             <name>dfs.namenode.servicerpc-address</name>
+             <value>hadoop10:8020</value>
+             <description>必须和dfs.namenode.http-address相同机器.</description>
+    </property></p>
+<hr />
+<p><property>
+               <name>fs.defaultFS</name>
+               <value>hdfs://hadoop10:9000</value>
+   </property></p>
+<p>```</p>
+<ol>
+<li>迁移数据</li>
+</ol>
+<p>修改dfs.namenode.name.dir配置下的文件到新的节点，且文件位置相同。</p>
+<ol>
+<li>同步配置</li>
+</ol>
+<h3 id="secondarynamenode">迁移SecondaryNameNode</h3>
+<h3 id="resourcemanager">迁移resourceManager</h3>
+<ol>
+<li>
+<p>关闭服务</p>
+</li>
+<li>
+<p>修改配置，修改到新节点。</p>
+</li>
+</ol>
+<p>```xml
+    <property>
+                   <name>yarn.resourcemanager.hostname</name>
+                   <value>hadoop7</value>
+           </property></p>
+<pre><code>       &lt;property&gt;
+               &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+               &lt;value&gt;hadoop7:8032&lt;/value&gt;
+       &lt;/property&gt;
+       &lt;property&gt;
+               &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;
+               &lt;value&gt;hadoop7:8088&lt;/value&gt;
+       &lt;/property&gt;
+</code></pre>
+<p>```</p>
+<ol>
+<li>启动服务，resourceManager只能在主节点启动服务。</li>
+</ol>
+<h3 id="_4">增加节点</h3>
+<ol>
+<li>
+<p>复制软件包到相同的目录。复制环境配置。</p>
+</li>
+<li>
+<p>修改core-site.xml的hadoop.tmp.dir：/data/app/hadoop/hadoopDatas/tempDatas</p>
+</li>
+<li>
+<p>```xml
+      hdfs-site.xml 
+      <!-- namenode保存fsimage的路径 -->
+          <property>
+              <name>dfs.namenode.name.dir</name>
+              <value>/data/app/hadoop/hadoopDatas/namenodeDatas</value>
+          </property>
+          <!--  定义dataNode数据存储的节点位置，实际工作中，一般先确定磁盘的挂载目录，然后多个目录用，进行分割  -->
+          <property>
+              <name>dfs.datanode.data.dir</name>
+              <value>/data/app/hadoop/hadoopDatas/datanodeDatas</value>
+          </property>
+          <!-- namenode保存editslog的目录 -->
+          <property>
+              <name>dfs.namenode.edits.dir</name>
+              <value>/data/app/hadoop/hadoopDatas/dfs/nn/edits</value>
+          </property>
+          <!-- secondarynamenode保存待合并的fsimage -->
+          <property>
+              <name>dfs.namenode.checkpoint.dir</name>
+              <value>/data/app/hadoop/hadoopDatas/dfs/snn/name</value>
+          </property>
+          <!-- secondarynamenode保存待合并的editslog -->
+          <property>
+              <name>dfs.namenode.checkpoint.edits.dir</name>
+              <value>/data/app/hadoop/hadoopDatas/dfs/nn/snn/edits</value>
+          </property></p>
+<p>```</p>
+<p>yarn-site.xml</p>
+<p>```xml
+        <property>
+                  <name>yarn.nodemanager.local-dirs</name>
+                  <value>/data/app/hadoop/logs/yarn</value>
+          </property></p>
+<pre><code>      &lt;property&gt;
+              &lt;name&gt;yarn.nodemanager.log-dirs&lt;/name&gt;
+              &lt;value&gt;/data/app/hadoop/logs/yarn/log&lt;/value&gt;
+      &lt;/property&gt;
+</code></pre>
+<p>```</p>
+</li>
+</ol>
+<p>​      hadoop-env.sh</p>
+<pre><code>    ```shell
+</code></pre>
+<p>/usr/local/jdk
+   /data/app/hadoop
+        ```</p>
+<ol>
+<li>
+<p>增加workers文件的节点。</p>
+</li>
+<li>
+<p>同步配置文件</p>
+</li>
+</ol>
+<p><code>shell
+   scp core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml workers root@hadoop7:$PWD</code></p>
+<ol>
+<li>启动节点</li>
+</ol>
+<p><code>shell
+   hadoop-daemon.sh start datanode
+   hadoop-daemon.sh start nodemanager</code></p>
+<ol>
+<li>重新启动</li>
+</ol>
+<pre><code class="language-shell">exec &quot;${HADOOP_HDFS_HOME}/bin/hdfs&quot; --config &quot;${HADOOP_CONF_DIR}&quot; --daemon start balancer &quot;$@&quot;
+</code></pre>
+<h3 id="_5">剔除节点</h3>
+<p>加入黑名单只会让其有退役状态，然后复制数据，重新达到三副本状态。退役完成后，从剔除白名单里去掉节点即可。</p>
+<ol>
+<li>创建黑名单,将需要剔除的节点放入配置，配置完成后同步到各个节点。</li>
+</ol>
+<p>```shell
+   vim blacklist</p>
+<p>echo hadoop8 &gt;&gt;blacklist
+   ```</p>
+<p>在hdfs-site.xml增加配置</p>
+<p><code>xml
+   &lt;property&gt;
+       &lt;name&gt;dfs.hosts.exclude&lt;/name&gt;
+       &lt;value&gt;绝对路径blacklist&lt;/value&gt;
+   &lt;/property&gt;</code></p>
+<ol>
+<li>同步完后刷新一下节点，</li>
+</ol>
+<p><code>shell
+   hdfs dfsadmin -refreshNodes
+   yarn rmadmin -refreshNodes</code></p>
+<p>刷新完后等待退役，Decommissioning表示节点退役中，Decommissioned退役完成。</p>
+<ol>
+<li>增加白名单，加入所有的节点。然后同步一下配置</li>
+</ol>
+<p><code>shell
+   hdfs dfsadmin -refreshNodes</code></p>
+<ol>
+<li>删掉名单里需要剔除的节点。然后刷新一下</li>
+</ol>
+<p><code>shell
+   hdfs dfsadmin -refreshNodes</code></p>
+<ol>
+<li>退役完成后关闭节点。</li>
+</ol>
+<p><code>shell
+   hdfs --daemon stop datanode
+   yarn --daemon stop nodemanager</code></p>
+<ol>
+<li>关闭nodemanager</li>
+</ol>
+<p><code>shell
+   hadoop-daemon.sh stop nodemanager</code></p>
+<p>剔除hadoop8后部分节点的样子</p>
+<pre><code class="language-shell">Block ID: 1073741899
+
+Block Pool ID: BP-273023012-172.16.8.68-1684156172690
+
+Generation Stamp: 1075
+
+Size: 134217728
+
+Availability:
+
+hadoop7
+hadoop10
+hadoop9
+hadoop8
+</code></pre>
+<h3 id="_6">再次加节点</h3>
+<ol>
+<li>
+<p>重复上面加节点操作。</p>
+</li>
+<li>
+<p>启动nodemanager,检查resourcemanager的资源节点是否增加</p>
+</li>
+</ol>
+<p><code>shell
+   yarn-daemon.sh start nodemanager</code></p>
+<ol>
+<li>启动datanode</li>
+</ol>
+<p><code>shell
+   hadoop-daemon.sh start datanode</code></p>
+<ol>
+<li>修改配置</li>
+</ol>
+<p>节点加入workers,节点加入白名单，同步配置</p>
+<ol>
+<li>刷新集群节点</li>
+</ol>
+<p><code>shell
+   hdfs dfsadmin -refreshNodes</code></p>
 
 
 
@@ -650,42 +1021,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="../../%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/Python/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Python" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Python
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../../%E9%A1%B9%E7%9B%AE%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/%E9%A1%B9%E7%9B%AEbug/" class="md-footer__link md-footer__link--next" aria-label="Next: 项目bug" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              项目bug
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
