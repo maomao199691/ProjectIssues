@@ -661,6 +661,9 @@ hdfs dfs -ls -h /path/to/directory | awk '$NF !~ /^d/ {print $NF, $5}' | sort -k
 
 # 查询目录下所有文件的最大文件(统一文件大小单位)
 hdfs dfs -ls -R /gkza-db/bid_collect/ | awk '$NF !~ /^d/ {size=$5; if (size&lt;1024) unit=&quot;B&quot;; else if (size&lt;1048576) {size=size/1024; unit=&quot;KB&quot;;} else if (size&lt;1073741824) {size=size/1048576; unit=&quot;MB&quot;;} else {size=size/1073741824; unit=&quot;GB&quot;}; printf &quot;%s %s%s\n&quot;, $NF, size, unit}' | sort -k 2 -rh | head -n 1
+
+# 查询目录下超过128M的文件
+hadoop fs -ls -R /gkza-db/report_collect/ | awk '$NF !~ /^d/ &amp;&amp; $5 &gt; 128*1024*1024 {print $NF}'
 </code></pre>
 
 
