@@ -822,7 +822,7 @@
 <pre><code class="language-shell">nohup /app/hive/bin/hiveserver2 1&gt;/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
 </code></pre>
 <p><strong>HiveServer2错误级别启动</strong></p>
-<pre><code class="language-shell">nohup /app/hive/bin/hiveserver2 -hiveconf hive.root.logger=INFO,console 1&gt;/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
+<pre><code class="language-shell">nohup /data/app/hive/bin/hiveserver2 -hiveconf hive.root.logger=INFO,console 1&gt;/data/app/hive/logs/hiveserver2.log 2&gt;&amp;1 &amp;
 </code></pre>
 <p><strong>Hive metastore启动</strong></p>
 <pre><code class="language-shell">nohup /app/hive-metastore/bin/hive --service metastore 1&gt;/app/hive-metastore/logs/metastore.log 2&gt;&amp;1 &amp;
